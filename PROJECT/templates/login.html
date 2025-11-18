@@ -1,0 +1,26 @@
+<!-- templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — HIRE WIRE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/credential.css') }}">
+</head>
+<body>
+  <div class="main">
+    <h1>LOGIN</h1>
+    <p class="intro">Enter your credentials</p>
+
+    <form method="post" action="{{ url_for('login') }}">
+      <input type="text" name="user_id" placeholder="Enter Your ID" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+      <button type="submit">Login</button>
+    </form>
+
+    <div style="margin-top:15px;">
+      <a href="{{ url_for('home') }}" style="color:#ccc;">Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Companies Available — HIRE WIRE</title>
+  <style>
+    body { margin:0; padding:0; font-family:'Poppins', sans-serif; background:#f9f9f9; display:flex; flex-direction:column; align-items:center; min-height:100vh; }
+    .role-form { background:#fff; padding:30px 40px; border-radius:12px; box-shadow:0 4px 18px rgba(0,0,0,0.1); margin-top:30px; display:flex; flex-direction:column; gap:15px; width:360px; text-align:center; }
+    .role-form input, .role-form button { padding:10px; border-radius:6px; font-size:1rem; outline:none; }
+    .role-form button { border:none; background:#7d3c98; color:white; font-weight:bold; cursor:pointer; transition:0.2s; }
+    .role-form button:hover { background:#682a84; }
+    table { width: 90%; margin: 40px auto; border-collapse: collapse; text-align: left; border-radius: 15px; overflow: hidden; background: #000; box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); color: #fff; }
+    th, td { padding: 14px 18px; border-bottom: 1px solid #333; }
+    th { background: #111; text-transform: uppercase; letter-spacing:1px; font-weight:bold; }
+    tr:nth-child(even) { background: #1a1a1a; }
+    tr:hover { background: #222; transition:0.2s ease; }
+    caption { caption-side: top; font-size:1.8rem; font-weight:700; color:#000; margin-bottom:25px; text-shadow:0 0 10px rgba(255,255,255,0.5); }
+    a { color:#9d7dfb; text-decoration:none; font-weight:bold; }
+    a:hover { color:#d3b8ff; text-decoration:underline; }
+    @media (max-width:600px){ table { width:95%; font-size:0.9rem; } th, td { padding:10px 12px; } .role-form { width:95%; } }
+  </style>
+</head>
+<body>
+
+{% if not role %}
+<form class="role-form" action="{{ url_for('companies') }}" method="get">
+    <h2>Step 1: Enter Your Role</h2>
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <input type="text" name="role" placeholder="e.g., Data Analyst" required>
+    <button type="submit">See Jobs</button>
+</form>
+
+{% else %}
+
+<table>
+  <caption>Jobs Available for "{{ role }}"</caption>
+  <thead>
+    <tr>
+      <th>Job Title</th>
+      <th>Company</th>
+      <th>Location</th>
+      <th>Salary Range</th>
+      <th>Apply Link</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% if jobs %}
+      {% for job in jobs %}
+      <tr>
+        <td>{{ job.title or 'N/A' }}</td>
+        <td>{{ job.company.display_name or 'N/A' }}</td>
+        <td>{{ job.location.display_name or 'N/A' }}</td>
+
+        <td>
+          {{ job.salary_min or 'N/A' }}
+          -
+          {{ job.salary_max or 'N/A' }}
+        </td>
+
+        <td>
+          {% if job.redirect_url %}
+            <a href="{{ job.redirect_url }}" target="_blank">Apply</a>
+          {% else %}
+            N/A
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr><td colspan="5" style="text-align:center;">No jobs found for this role</td></tr>
+    {% endif %}
+  </tbody>
+</table>
+
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!-- templates/dashboard.html with magical black-purple neon theme -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome — HIRE WIRE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      color: #e6d6ff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Magical star background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(165,94,255,0.3) 0%, rgba(0,0,0,1) 70%);
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(2px 2px at 20% 30%, #b26dff 70%, transparent),
+                        radial-gradient(1.5px 1.5px at 70% 80%, #c38cff 70%, transparent),
+                        radial-gradient(1.8px 1.8px at 50% 50%, #9b59ff 70%, transparent),
+                        radial-gradient(1.2px 1.2px at 10% 70%, #d7b7ff 70%, transparent),
+                        radial-gradient(2px 2px at 90% 20%, #bb83ff 70%, transparent);
+      background-size: cover;
+      z-index: -1;
+      opacity: 0.7;
+    }
+
+    .info-fab {
+      background: #7d3c98;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 20px;
+      box-shadow: 0 0 10px #a569bd, 0 0 20px #7d3c98;
+      transition: 0.3s ease;
+    }
+
+    .info-fab:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 15px #c39bd3, 0 0 25px #a569bd;
+    }
+
+    .info-panel {
+      background: rgba(20, 0, 35, 0.7);
+      padding: 20px;
+      border-radius: 12px;
+      width: 260px;
+      margin-left: 20px;
+      margin-top: 10px;
+      backdrop-filter: blur(5px);
+      color: #e8d9ff;
+      border: 1px solid rgba(150, 80, 255, 0.3);
+      box-shadow: 0 0 15px #7d3c98;
+    }
+
+    .menu {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .menu a {
+      text-decoration: none;
+      background: linear-gradient(90deg, #7d3c98, #9b59b6);
+      padding: 14px 28px;
+      border-radius: 50px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px #a569bd;
+      transition: 0.3s ease;
+    }
+
+    .menu a:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 20px #d7b7ff, 0 0 35px #b085e8;
+    }
+
+    .msg-box {
+      padding: 12px 20px;
+      margin: 20px auto;
+      background-color: #7d3c98;
+      color: white;
+      border-radius: 8px;
+      text-align: center;
+      width: fit-content;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  {% if request.args.get('msg') %}
+  <div class="msg-box">
+    {{ request.args.get('msg') }}
+  </div>
+  {% endif %}
+
+  <button class="info-fab" tabindex="0">My Info</button>
+  <div class="info-panel">
+    <strong>Account Details</strong><br>
+    Name: <span>{{ name }}</span><br>
+    User ID: <span>{{ user_id }}</span><br>
+    Password: <span>{{ password }}</span>
+  </div>
+
+  <div class="menu">
+      <a href="{{ url_for('companies', user_id=user_id) }}">Search Jobs</a>
+      <a href="{{ url_for('upload_page', user_id=user_id) }}">Eligible Jobs</a>
+  </div>
+</body>
+</html>

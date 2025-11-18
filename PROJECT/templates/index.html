@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HIRE WIRE</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+
+</head>
+<body>
+  <div class="main">
+    <h1>HIRE WIRE</h1>
+    <p class="intro">A Resume Shortlisting System</p>
+    <div class="buttons">
+      <a href="{{ url_for('login') }}" class="login">LOGIN</a>
+      <a href="{{ url_for('signup') }}" class="signup">SIGN UP</a>
+    </div>
+  </div>
+</body>
+</html>

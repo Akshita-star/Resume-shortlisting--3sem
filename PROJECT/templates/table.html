@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HIRE WIRE — Job Matches</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 36px;
+      color: #bb86fc;
+      text-shadow: 0 0 20px #6d2bbf;
+    }
+
+    .main-container {
+      width: 90%;
+      margin: 0 auto 40px auto;
+    }
+
+    .card {
+      background: #121212;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 0 25px #5f2b97a0;
+      margin-bottom: 35px;
+    }
+
+    .card h2 {
+      font-size: 24px;
+      color: #c792ff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px #8f42d4;
+    }
+
+    .highlight {
+      color: #d19aff;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #161616;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 50px;
+      box-shadow: 0 0 25px #6520a3a0;
+    }
+
+    th {
+      background: #1f1f1f;
+      padding: 14px;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #e6c6ff;
+      border-bottom: 1px solid #292929;
+    }
+
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #222;
+      font-size: 13px;
+    }
+
+    tr:hover {
+      background: #262626;
+      transition: 0.2s;
+    }
+
+    a {
+      color: #bb86fc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      color: #e5c7ff;
+      text-shadow: 0 0 10px #c79aff;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #d19aff;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Jobs Matching Your Resume</h1>
+
+<div class="main-container">
+
+  <div class="card">
+    <h2>Parsed Resume</h2>
+
+    <!-- ⭐ Profession display (Correct fix) -->
+    <p><span class="highlight">Detected Profession:</span>
+      {% if parsed.profession %}
+        {{ parsed.profession | join(', ') }}
+      {% else %}
+        General
+      {% endif %}
+    </p>
+
+    <p><span class="highlight">Email:</span> {{ parsed.email or 'N/A' }}</p>
+    <p><span class="highlight">Phone:</span> {{ parsed.phone or 'N/A' }}</p>
+
+    <p><span class="highlight">Education:</span>
+      {% if parsed.education %}
+        {{ parsed.education | join(', ') }}
+      {% else %}
+        N/A
+      {% endif %}
+    </p>
+
+    <p><span class="highlight">Skills:</span>
+      {% if parsed.skills %}
+        {{ parsed.skills | join(', ') }}
+      {% else %}
+        No Skills Found
+      {% endif %}
+    </p>
+  </div>
+
+</div>
+
+{% if jobs %}
+<table>
+  <thead>
+    <tr>
+      <th>Job Title</th>
+      <th>Company</th>
+      <th>Location</th>
+      <th>Salary</th>
+      <th>Apply</th>
+      <th>Match %</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for j in jobs %}
+    <tr>
+      <td>{{ j.title }}</td>
+
+      <td>{{ j.company if j.company else 'N/A' }}</td>
+
+      <td>{{ j.location if j.location else 'N/A' }}</td>
+
+      <td>
+        {% if j.salary != 'N/A' %}
+          {{ j.salary }}
+        {% else %}
+          Not Disclosed
+        {% endif %}
+      </td>
+
+      <td><a href="{{ j.url }}" target="_blank">Apply</a></td>
+
+      <td>{{ j.match_pct }}%</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p style="text-align:center; margin-top:20px;">No jobs found</p>
+{% endif %}
+
+<a class="back" href="{{ url_for('upload_page', user_id=user_id) }}">Upload Another Resume</a>
+
+</body>
+</html>
