@@ -458,7 +458,7 @@ def upload_resume():
 
     text = extract_text_from_resume(file_path)
     parsed = simple_parse_resume_spacy(text)
-    store_resume_json(uid, file_path, parsed)
+    store_resume_json(uid, parsed)
 
     roles = parsed.get("job_titles", ["general"])
 
